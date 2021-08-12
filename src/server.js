@@ -1,8 +1,11 @@
 import Hapi from '@hapi/hapi';
+
 const port = process.env.PORT || 3001;
+const host = process.env.NODE_ENV === 'development' ? 'localhost' : null;
 
 const init = async () => {
     const server = Hapi.server({
+        host,
         port,
         routes: {
             cors: {
