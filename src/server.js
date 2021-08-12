@@ -75,36 +75,3 @@ process.on('unhandledRejection', (err) => {
 });
 
 init();
-// import express from 'express';
-// import http from 'http';
-// import cors from 'cors';
-// import { Server } from 'socket.io';
-//
-// const app = express();
-// const server = http.createServer(app);
-// const io = new Server(server, {
-//     cors: {
-//         origin: "*",
-//         methods: ["GET", "POST"],
-//         allowedHeaders: ["my-custom-header"],
-//         credentials: true
-//     }
-// });
-//
-// app.use(cors({
-//     credentials: true,
-//     origin: '*'
-// }));
-//
-// app.get('/*', (req, res) => {
-//     res.send('Hello World!');
-// });
-//
-//
-
-//
-//
-//
-// server.listen(3001, () => {
-//     console.log('listening on *:3001');
-// });
