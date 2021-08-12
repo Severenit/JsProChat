@@ -1,7 +1,7 @@
 {
   "name": "JsProChat",
   "version": "1.0.0",
-  "main": "src/server.js",
+  "main": "dist/server.js",
   "scripts": {
     "build:dev": "env NODE_ENV=development webpack --config webpack.config.js",
     "build": "env NODE_ENV=production webpack --config webpack.config.js",
@@ -21,7 +21,6 @@
     "webpack-node-externals": "2.5.2"
   },
   "dependencies": {
-    "@hapi/hapi": "^20.1.5",
-    "@hapi/inert": "^6.0.3"
+    "@hapi/hapi": "^20.1.5"
   }
 }

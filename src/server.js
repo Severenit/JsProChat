@@ -1,5 +1,4 @@
 import Hapi from '@hapi/hapi';
-import Inert from '@hapi/inert';
 const port = process.env.PORT || 3001;
 
 const init = async () => {
@@ -19,8 +18,6 @@ const init = async () => {
             },
         },
     });
-
-    await server.register(Inert);
 
     server.route({
         method: 'GET',
