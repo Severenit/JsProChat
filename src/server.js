@@ -39,7 +39,10 @@ const init = async () => {
             connection[socket.id] = {
                 name
             };
-            io.emit('chat connection', `${name} is online`);
+            io.emit('chat connection', {
+                time: Date.now(),
+                msg: `${name} is online`,
+            });
         });
 
         socket.on('chat message', (msg) => {
@@ -52,7 +55,10 @@ const init = async () => {
 
         socket.on('disconnect', () => {
             console.log('user disconnected');
-            io.emit('chat disconnect', `${connection[socket.id].name} is offline`);
+            io.emit('chat disconnect', {
+                time: Date.now(),
+                msg: `${connection[socket.id].name} is offline`,
+            });
             delete connection[socket.id];
         });
     });
