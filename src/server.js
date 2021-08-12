@@ -1,9 +1,13 @@
 import Hapi from '@hapi/hapi';
-import Inert from '@hapi/inert';
+import { Server } from 'socket.io';
+
 const port = process.env.PORT || 3001;
+const host = process.env.NODE_ENV === 'development' ? 'localhost' : null;
+const connection = {};
 
 const init = async () => {
     const server = Hapi.server({
+        host,
         port,
         routes: {
             cors: {
@@ -20,19 +24,39 @@ const init = async () => {
         },
     });
 
-    await server.register(Inert);
-
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: () => {
-            return 'Hello My Dear Friend!';
+    const ioServer = server.listener;
+    const io = new Server(ioServer, {
+        cors: {
+            origin: "*",
+            credentials: true,
         },
+    });
+
+    io.on('connection', (socket) => {
+        console.log('a user connected');
+        socket.once('start', (name) => {
+            connection[socket.id] = {
+                name
+            };
+        });
+
+        socket.on('chat message', (msg) => {
+            io.emit('chat message', {
+                time: Date.now(),
+                name: connection[socket.id]?.name,
+                msg
+            });
+        });
+
+        socket.on('disconnect', () => {
+            console.log('user disconnected');
+            delete connection[socket.id];
+        });
     });
 
     await server.start();
     console.log('Server running on %s', server.info.uri);
-};
+}
 
 process.on('unhandledRejection', (err) => {
     console.log(err);
@@ -40,3 +64,36 @@ process.on('unhandledRejection', (err) => {
 });
 
 init();
+// import express from 'express';
+// import http from 'http';
+// import cors from 'cors';
+// import { Server } from 'socket.io';
+//
+// const app = express();
+// const server = http.createServer(app);
+// const io = new Server(server, {
+//     cors: {
+//         origin: "*",
+//         methods: ["GET", "POST"],
+//         allowedHeaders: ["my-custom-header"],
+//         credentials: true
+//     }
+// });
+//
+// app.use(cors({
+//     credentials: true,
+//     origin: '*'
+// }));
+//
+// app.get('/*', (req, res) => {
+//     res.send('Hello World!');
+// });
+//
+//
+
+//
+//
+//
+// server.listen(3001, () => {
+//     console.log('listening on *:3001');
+// });
