@@ -3,6 +3,7 @@ import { Server } from 'socket.io';
 
 const port = process.env.PORT || 3001;
 const host = process.env.NODE_ENV === 'development' ? 'localhost' : null;
+
 const connection = {};
 
 const init = async () => {
