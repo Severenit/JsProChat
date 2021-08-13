@@ -72,6 +72,10 @@ const init = async () => {
                 id: socket.id,
             });
             delete connection[socket.id];
+            io.emit('chat online', {
+                time: Date.now(),
+                online: Object.keys(connection).length,
+            });
         });
     });
 
