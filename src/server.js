@@ -69,7 +69,7 @@ const init = async () => {
             online: Object.keys(connection).length,
             names: Object.keys(connection).map(item => ({
                 id: item,
-                name: connection[item],
+                name: connection[item].name,
             }))
         });
 
@@ -95,7 +95,7 @@ const init = async () => {
                 online: Object.keys(connection).length,
                 names: Object.keys(connection).map(item => ({
                     id: item,
-                    name: connection[item],
+                    name: connection[item].name,
                 }))
             });
         });
