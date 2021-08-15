@@ -83,16 +83,6 @@ const init = async () => {
             }
         });
 
-        
-        io.emit('chat online', {
-            time: Date.now(),
-            online: Object.keys(connection).length,
-            names: Object.keys(connection).map(item => ({
-                id: item,
-                name: connection[item].name,
-            }))
-        });
-
         socket.on('chat message', (msg) => {
             io.emit('chat message', {
                 time: Date.now(),
