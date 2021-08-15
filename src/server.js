@@ -50,6 +50,20 @@ const init = async () => {
             }
         });
 
+        socket.once('chat start', (name) => {
+            if (name) {
+                connection[socket.id] = {
+                    name
+                };
+                io.emit('chat connection', {
+                    time: Date.now(),
+                    msg: `${name} is online`,
+                    id: socket.id,
+                });
+            }
+        });
+
+
         io.emit('chat online', {
             time: Date.now(),
             online: Object.keys(connection).length,
