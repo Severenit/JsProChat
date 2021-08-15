@@ -53,6 +53,10 @@ const init = async () => {
         io.emit('chat online', {
             time: Date.now(),
             online: Object.keys(connection).length,
+            names: Object.keys(connection).map(item => ({
+                id: item,
+                name: connection[item],
+            }))
         });
 
         socket.on('chat message', (msg) => {
