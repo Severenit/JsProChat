@@ -42,10 +42,20 @@ const init = async () => {
                 connection[socket.id] = {
                     name
                 };
+
                 io.emit('chat connection', {
                     time: Date.now(),
                     msg: `${name} is online`,
                     id: socket.id,
+                });
+
+                io.emit('chat online', {
+                    time: Date.now(),
+                    online: Object.keys(connection).length,
+                    names: Object.keys(connection).map(item => ({
+                        id: item,
+                        name: connection[item].name,
+                    }))
                 });
             }
         });
@@ -55,15 +65,25 @@ const init = async () => {
                 connection[socket.id] = {
                     name
                 };
+
                 io.emit('chat connection', {
                     time: Date.now(),
                     msg: `${name} is online`,
                     id: socket.id,
                 });
+
+                io.emit('chat online', {
+                    time: Date.now(),
+                    online: Object.keys(connection).length,
+                    names: Object.keys(connection).map(item => ({
+                        id: item,
+                        name: connection[item].name,
+                    }))
+                });
             }
         });
 
-
+        
         io.emit('chat online', {
             time: Date.now(),
             online: Object.keys(connection).length,
