@@ -25,6 +25,14 @@ const init = async () => {
         },
     });
 
+    server.route({
+        method: 'GET',
+        path: '/',
+        handler: () => {
+            return 'Hello My Dear Friend!';
+        },
+    });
+
     const ioServer = server.listener;
     const io = new Server(ioServer, {
         cors: {
